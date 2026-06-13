@@ -29,7 +29,7 @@ st.markdown("The FastAPI dashboard is running on port 8000.")
 st.markdown("[Open the dashboard in a new tab](http://localhost:8000/)")
 
 try:
-    st.components.v1.iframe("http://localhost:8000/", height=900)
+    st.iframe("http://localhost:8000/", height=900)
 except Exception as exc:
     st.warning(f"Unable to embed the dashboard in an iframe: {exc}")
     st.write("Use the link above to open the dashboard.")
