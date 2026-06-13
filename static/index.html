@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Agent — End-to-End App Builder</title>
+    <meta name="description" content="Multi-agent AI system that turns your app idea into production-ready code using specialized AI agents for planning, development, testing, and code review.">
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🤖</text></svg>">
+</head>
+<body>
+
+<div class="app-container">
+
+    <!-- ═══ HEADER ═══ -->
+    <header class="header">
+        <div class="header-brand">
+            <div class="header-logo">🤖</div>
+            <div>
+                <div class="header-title">AI Agent Builder</div>
+                <div class="header-subtitle">End-to-End App Development</div>
+            </div>
+        </div>
+        <div class="header-status">
+            <div class="status-dot" id="status-dot"></div>
+            <span id="status-text">Ollama Connected</span>
+        </div>
+    </header>
+
+    <!-- ═══ INPUT SECTION ═══ -->
+    <section class="input-section">
+        <div class="input-card">
+            <label class="input-label">
+                <span>💡</span> Describe Your App Idea
+            </label>
+            <div class="input-row">
+                <textarea
+                    class="idea-input"
+                    id="idea-input"
+                    placeholder="e.g., Build a REST API for a todo app using FastAPI with CRUD operations and SQLite database..."
+                    rows="2"
+                ></textarea>
+                <button class="run-btn" id="run-btn">
+                    <span class="btn-icon" id="btn-icon">🚀</span>
+                    <span id="btn-text">Build App</span>
+                </button>
+            </div>
+            <div class="quick-ideas">
+                <button class="quick-idea">REST API for a todo app using FastAPI</button>
+                <button class="quick-idea">Weather dashboard with Flask and OpenWeatherMap</button>
+                <button class="quick-idea">CLI task manager with SQLite</button>
+                <button class="quick-idea">URL shortener service with analytics</button>
+                <button class="quick-idea">Chat application using WebSockets</button>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-container" id="progress-bar">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+                <div class="progress-info">
+                    <span id="progress-text">Initializing...</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ PIPELINE VISUALIZATION ═══ -->
+    <section class="pipeline-section">
+        <div class="section-title">
+            <span>⚡</span> Agent Pipeline
+        </div>
+        <div class="pipeline-track">
+            <div class="pipeline-stage" data-stage="planning" data-status="idle">
+                <div class="stage-icon-wrap">📋</div>
+                <div class="stage-label">Planner Agent</div>
+                <div class="stage-status-text">Waiting</div>
+            </div>
+            <div class="pipeline-stage" data-stage="development" data-status="idle">
+                <div class="stage-icon-wrap">💻</div>
+                <div class="stage-label">Developer Agent</div>
+                <div class="stage-status-text">Waiting</div>
+            </div>
+            <div class="pipeline-stage" data-stage="testing" data-status="idle">
+                <div class="stage-icon-wrap">🧪</div>
+                <div class="stage-label">Tester Agent</div>
+                <div class="stage-status-text">Waiting</div>
+            </div>
+            <div class="pipeline-stage" data-stage="review" data-status="idle">
+                <div class="stage-icon-wrap">🔍</div>
+                <div class="stage-label">Reviewer Agent</div>
+                <div class="stage-status-text">Waiting</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ OUTPUT SECTION ═══ -->
+    <section class="output-section">
+        <div class="section-title">
+            <span>📄</span> Agent Outputs
+        </div>
+
+        <!-- Tabs -->
+        <div class="output-tabs">
+            <button class="output-tab active" data-stage="planning" data-status="idle">
+                <span class="tab-badge"></span>
+                <span>📋 Plan</span>
+            </button>
+            <button class="output-tab" data-stage="development" data-status="idle">
+                <span class="tab-badge"></span>
+                <span>💻 Code</span>
+            </button>
+            <button class="output-tab" data-stage="testing" data-status="idle">
+                <span class="tab-badge"></span>
+                <span>🧪 Tests</span>
+            </button>
+            <button class="output-tab" data-stage="review" data-status="idle">
+                <span class="tab-badge"></span>
+                <span>🔍 Review</span>
+            </button>
+        </div>
+
+        <!-- Panels -->
+        <div class="output-panel active" id="panel-planning">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span class="panel-title-icon">📋</span>
+                    Development Plan
+                </div>
+                <div class="panel-actions">
+                    <button class="panel-action-btn" onclick="copyPanelContent('planning')">
+                        📋 Copy
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body" id="panel-planning-body">
+                <div class="panel-body empty">
+                    <div class="empty-icon">📋</div>
+                    <div class="empty-text">Enter an app idea and click "Build App" to begin.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="output-panel" id="panel-development">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span class="panel-title-icon">💻</span>
+                    Generated Code
+                </div>
+                <div class="panel-actions">
+                    <button class="panel-action-btn" onclick="copyPanelContent('development')">
+                        📋 Copy
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body" id="panel-development-body">
+                <div class="panel-body empty">
+                    <div class="empty-icon">💻</div>
+                    <div class="empty-text">Code will appear here once the Developer Agent completes.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="output-panel" id="panel-testing">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span class="panel-title-icon">🧪</span>
+                    Test Report
+                </div>
+                <div class="panel-actions">
+                    <button class="panel-action-btn" onclick="copyPanelContent('testing')">
+                        📋 Copy
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body" id="panel-testing-body">
+                <div class="panel-body empty">
+                    <div class="empty-icon">🧪</div>
+                    <div class="empty-text">Test report will appear here once the Tester Agent completes.</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="output-panel" id="panel-review">
+            <div class="panel-header">
+                <div class="panel-title">
+                    <span class="panel-title-icon">🔍</span>
+                    Final Reviewed Code
+                </div>
+                <div class="panel-actions">
+                    <button class="panel-action-btn" onclick="copyPanelContent('review')">
+                        📋 Copy
+                    </button>
+                </div>
+            </div>
+            <div class="panel-body" id="panel-review-body">
+                <div class="panel-body empty">
+                    <div class="empty-icon">🔍</div>
+                    <div class="empty-text">Final improved code will appear here after the Reviewer Agent finishes.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══ HISTORY SECTION ═══ -->
+    <section class="history-section">
+        <div class="section-title">
+            <span>🕐</span> Recent Runs
+        </div>
+        <div class="history-grid" id="history-grid">
+            <div class="panel-body empty" style="grid-column: 1 / -1;">
+                <div class="empty-icon">📭</div>
+                <div class="empty-text">No pipeline runs yet. Enter an idea above to get started!</div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<!-- Toast Container -->
+<div class="toast-container" id="toast-container"></div>
+
+<!-- Scripts -->
+<script src="/static/js/app.js"></script>
+
+</body>
+</html>
