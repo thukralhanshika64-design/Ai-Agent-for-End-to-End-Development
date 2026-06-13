@@ -5,8 +5,11 @@ Launcher script to run the AI Agent with proper asyncio handling for Windows
 import os
 import sys
 
-# Set the API key from environment or .env file (loaded via config.py)
-# The API key should be set in .env or as an environment variable
+# Do not hardcode the Groq API key here.
+# The key should be provided in .env or as an environment variable.
+if not os.getenv("GROQ_API_KEY"):
+    print("ERROR: GROQ_API_KEY is not set. Add it to .env or your environment variables.")
+    sys.exit(1)
 
 # If no argument provided, add a default one
 if len(sys.argv) == 1:
